@@ -8,8 +8,7 @@ Your seat wasn't at the very front or back, though; the seats with IDs +1 and -1
 
 What is the ID of your seat?
 '''
-
-from day5_1 import row, column
+from day5_1 import binaryConversion
 
 # get input
 with open("input_day5.txt") as f:
@@ -18,7 +17,7 @@ with open("input_day5.txt") as f:
 # calculate seat ID and remove it from the full list of possible IDs
 seatIDs = list(range(0, 1023))
 for seat in inputs:
-    seatID = row(seat) * 8 + column(seat)
+    seatID = binaryConversion(seat[:7]) * 8 + binaryConversion(seat[-3:])
     if seatID in seatIDs:
         seatIDs.remove(seatID)
 

@@ -42,41 +42,47 @@ As a sanity check, look through your list of boarding passes. What is the highes
 with open("input_day5.txt") as f:
     inputs = f.read().splitlines()
 
-# check seat row
-def row(seat):
-    row = 128
-    sub = 128
-    for char in seat:
-        if char in 'F':
-            sub = int(sub/2)
-            row -= sub
+# first solution, replaced by binaryConversion.
+#
+## check seat row
+#def row(seat):
+#    row = 128
+#    sub = 128
+#    for char in seat:
+#        if char in 'F':
+#            sub = int(sub/2)
+#            row -= sub
+#
+#        elif char in 'B':
+#            sub = int(sub/2)
+#
+#        else:
+#            return row-1
+#        
+## check seat column
+#def column(seat):
+#    column = 8
+#    sub = 8
+#    for char in seat[-3:]:
+#        if char in 'L':
+#            sub = int(sub/2)
+#            column -= sub
+#
+#        elif char in 'R':
+#            sub = int(sub/2) 
+#
+#    return column-1
 
-        elif char in 'B':
-            sub = int(sub/2)
-
-        else:
-            return row-1
-        
-# check seat column
-def column(seat):
-    column = 8
-    sub = 8
-    for char in seat[-3:]:
-        if char in 'L':
-            sub = int(sub/2)
-            column -= sub
-
-        elif char in 'R':
-            sub = int(sub/2) 
-
-    return column-1
-
+# Convert seat to binary and return in base 10
+def binaryConversion(seat):
+    return int(seat.replace('F', '0').replace('R', '1').replace('B', '1').replace('L', '0'), 2)
 
 # main, calculate seat ID and keep the highest seat ID encountered
 def main():
     highestSeatID = 0
     for seat in inputs:
-        seatID = row(seat) * 8 + column(seat)
+        seatID = binaryConversion(seat[:7]) * 8 + binaryConversion(seat[-3:])
+        
         if seatID > highestSeatID:
             highestSeatID = seatID
     
